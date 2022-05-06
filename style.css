@@ -1,49 +1,86 @@
 /*seletor universal, pega todos os elemento da pagina*/
 * {
-  margin: 0;
   /* para começar a contar o tamanho a partir da borda
   box-sizing: border-box;*/
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 :root {
   /* variavel de cores*/
   --primary-color: hsl(170, 100%, 26%);
-  --black-readline: hsl(210, 11%, 15%);
+  --black-headline: hsl(210, 11%, 15%);
   --paragraph: hsl(210, 9%, 31%);
-
+  --brand-beige: hsl(39, 100%, 97%);
+  --brand-light: hsl(148, 23%, 89%);
+  --nav-height: 7.2rem;
   font-size: 62.5%; /* assim 1rem = 10px mas tem que por o font-size: 1.6rem; no body aqui no css; o calculo para o valor de 62.5 é (10*100)/16*/
   /*font-size: 100%; assim vc tem que fazer o numero que vc quer dividido por dezeseis 14/16=0,875 se divide por 16 pq é o tamanho da fonte padrão do navegador*/
 }
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
 body {
   font-family: 'DM Sans';
   font-size: 1.6rem; /* se vc usar o font-size: 62.5%; */
   text-align: center;
+  overflow: overlay;
 }
 
-header {
+.wrapper {
   width: 37.5rem;
-  margin-right: auto;
-  margin-left: auto;
-  margin-top: 4.1rem;
-  /* padding-right: 2rem;
-  padding-left: 2rem; */
+  margin-inline: auto;
+  padding-inline: 2.4rem;
 }
 
-h4 {
+ul {
+  list-style: none;
+}
+
+/*================== HEAER ===========================================
+ uma opção para criar alguma coisa antes de algo no html pelo css */
+ 
+ header {
+   margin-top: calc( 4.1rem + var(--nav-height));
+   /* padding-right: 2rem;
+   padding-left: 2rem; */
+  }
+
+header::before {
+  content: '';
+  /* vw(largura da pagina inteira) preenche toda pagina independente que esta sendo visualizada */
+  width: 100%;
+  height: calc(108rem + var(--nav-height));
+  background-color: var(--brand-light);
+  display: block;
+  /* para sobrepor a figura e mudar a sua dimenção Z */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* dimenção Z para botara frente ou atrás */
+  z-index: -1;
+}
+
+header h4 {
   /*font-size: 0.875rem; se vc usar o font-size: 100%; */
   font-size: 1.4rem;
   color: var(--primary-color);
   margin-bottom: 1.6rem;
 }
 
-h1 {
+header h1 {
   font-size: 3.4rem;
-  color: var(--black-readline);
+  color: var(--black-headline);
   /*altura da linha*/
   line-height: 130%;
   margin-bottom: 2.4rem;
 }
 
-p {
+header p {
   font-size: 1.8rem;
   line-height: 150%;
   font-weight: 400;
@@ -51,7 +88,7 @@ p {
   margin-bottom: 3.2rem;
 }
 
-button {
+header button {
   background: var(--primary-color);
   /* retirando a borda do botão */
   border: none;
@@ -67,7 +104,7 @@ button {
   font-size: 1.4rem;
   font-weight: 700;
   text-transform: uppercase;
-  /* para mecher com os filhos do button*/
+  /* para mecher com os filhos do button, trabalhando com alinhamentos em linhas*/
   display: flex;
   /* alinhar */
   align-items: center;
@@ -78,4 +115,175 @@ button {
   /* precisa modificar altura e largura da margem por conta do display flex */
   margin-right: auto;
   margin-left: auto;
+}
+
+header img{
+  /* serve para a largura da imagem se ajustar de acordo com q almenta a fonte no navegador  */
+  width: 26.4rem;
+  display: block;
+  margin-inline: auto;
+  object-position: 0 2rem;
+}
+
+.stats {
+  width: 32.7rem;
+  padding-block: 4rem;
+  /* troca a margem direita e esquerda pela inline*/
+  margin-inline: auto;
+  background-color: var(--brand-beige);
+  border: 1px solid var(--brand-light);
+  border-radius: 0.6rem;
+  display: flex;
+  /* parecido com o (display:flex) mas ele trabalhando com alinhamentos em colunas*/
+  flex-direction: column;
+  justify-content: center;
+  gap: 6rem;
+}
+
+.stat h3 {
+
+  font-size: 4.8rem;
+  color: var(--black-headline);
+  line-height: 130%;
+  margin-bottom: 0.4em;
+}
+
+.stat p {
+  /* aplicamos esta margem 0 pq mais acima no (p) nos fixamos uma distancoa q não é mais necessario */
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  line-height: 150%;
+}
+/* ==================  NAVIGATE ==================================== */
+nav {
+  display: flex;
+  height: var(--nav-height);
+
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+   
+}
+
+nav .wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav.scroll {
+  background-color: var(--primary-color);
+  width: 100vw;
+  position: fixed;
+  top: 0;
+}
+/* o (nth-child(1)) significa que ele vai escolher o primeiro filho do (SVG)*/
+nav.scroll svg:nth-child(1) path {
+  fill: white;
+}
+
+nav.scroll button path {
+  stroke: white;
+}
+
+nav button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/*=== MENU-EXPANDED =================================*/
+body.menu-expanded {
+  overflow: hidden;
+}
+
+body.menu-expanded > :not(nav) {
+  display: none;
+}
+
+.menu,
+.close-menu,
+body.menu-expanded .open-menu {
+  opacity: 0;
+  visibility: hidden;
+}
+
+body.menu-expanded .menu,
+body.menu-expanded .close-menu {
+  opacity: 1;
+  visibility: visible;
+}
+
+body.menu-expanded .menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--primary-color);
+
+  width: 100vw;
+  height: 100vh;
+
+  padding-top: var(--nav-height);
+}
+
+body.menu-expanded nav {
+  position: relative;
+}
+
+.menu ul:nth-child(1) {
+  display: flex;
+  flex-direction: column;
+  gap: 4.8rem;
+
+  margin-top: 6rem;
+
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 3.1rem;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.menu .button {
+  background: white;
+  border-radius: 4rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 2.3rem;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  color: var(--primary-color);
+
+  display: inline-block;
+  padding: 16px 32px;
+
+  margin-top: 4.8rem;
+  margin-bottom: 8rem;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3.2rem;
+}
+
+body.menu-expanded .logo,
+body.menu-expanded button {
+  position: relative;
+  z-index: 100;
+}
+
+body.menu-expanded .logo path {
+  fill: white;
+}
+
+body.menu-expanded button path {
+  stroke: white;
 }
