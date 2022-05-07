@@ -13,9 +13,13 @@
   --paragraph: hsl(210, 9%, 31%);
   --brand-beige: hsl(39, 100%, 97%);
   --brand-light: hsl(148, 23%, 89%);
+  --bg-light: hsl(180,14%, 97%);
   --nav-height: 7.2rem;
   font-size: 62.5%; /* assim 1rem = 10px mas tem que por o font-size: 1.6rem; no body aqui no css; o calculo para o valor de 62.5 é (10*100)/16*/
   /*font-size: 100%; assim vc tem que fazer o numero que vc quer dividido por dezeseis 14/16=0,875 se divide por 16 pq é o tamanho da fonte padrão do navegador*/
+}
+html {
+scroll-behavior: smooth;
 }
 
 html,
@@ -29,6 +33,7 @@ body {
   font-size: 1.6rem; /* se vc usar o font-size: 62.5%; */
   text-align: center;
   overflow: overlay;
+  background-color: var(--bg-light);
 }
 
 .wrapper {
@@ -41,38 +46,34 @@ ul {
   list-style: none;
 }
 
-/*================== HEAER ===========================================
- uma opção para criar alguma coisa antes de algo no html pelo css */
- 
- header {
-   margin-top: calc( 4.1rem + var(--nav-height));
-   /* padding-right: 2rem;
-   padding-left: 2rem; */
-  }
-
-header::before {
-  content: '';
-  /* vw(largura da pagina inteira) preenche toda pagina independente que esta sendo visualizada */
-  width: 100%;
-  height: calc(108rem + var(--nav-height));
-  background-color: var(--brand-light);
-  display: block;
-  /* para sobrepor a figura e mudar a sua dimenção Z */
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* dimenção Z para botara frente ou atrás */
-  z-index: -1;
+img {
+  max-width: 100%;
 }
 
-header h4 {
+section {
+   padding-block: 10rem;
+
+
+}
+
+section header h4 {
   /*font-size: 0.875rem; se vc usar o font-size: 100%; */
   font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 150%;
+  letter-spacing: 0.08rem;
   color: var(--primary-color);
+  text-transform: uppercase;
   margin-bottom: 1.6rem;
 }
 
-header h1 {
+section header h2 {  
+  font-size: 3rem;
+  line-height: 3.9rem;
+  color: var(--black-headline);
+  }
+
+section header h1 {
   font-size: 3.4rem;
   color: var(--black-headline);
   /*altura da linha*/
@@ -80,81 +81,13 @@ header h1 {
   margin-bottom: 2.4rem;
 }
 
-header p {
-  font-size: 1.8rem;
-  line-height: 150%;
-  font-weight: 400;
-  color: var(--paragraph);
-  margin-bottom: 3.2rem;
+section .content p {
+   font-weight: 400;
+   font-size: 1.6rem;
+   line-height: 150%;
+   color: var(--paragraph);
 }
 
-header button {
-  background: var(--primary-color);
-  /* retirando a borda do botão */
-  border: none;
-  /* arredondando   */
-  border-radius: 4rem;
-  /* margem inferior */
-  margin-bottom: 6rem;
-  /* altura e largura */
-  height: 6.2rem;
-  width: 26.3rem;
-  /* cor da letra, tamanho, largura, caixa alta  */
-  color: white;
-  font-size: 1.4rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  /* para mecher com os filhos do button, trabalhando com alinhamentos em linhas*/
-  display: flex;
-  /* alinhar */
-  align-items: center;
-  /* justuficar */
-  justify-content: center;
-  /* espaço entre os elementos */
-  gap: 1.6rem;
-  /* precisa modificar altura e largura da margem por conta do display flex */
-  margin-right: auto;
-  margin-left: auto;
-}
-
-header img{
-  /* serve para a largura da imagem se ajustar de acordo com q almenta a fonte no navegador  */
-  width: 26.4rem;
-  display: block;
-  margin-inline: auto;
-  object-position: 0 2rem;
-}
-
-.stats {
-  width: 32.7rem;
-  padding-block: 4rem;
-  /* troca a margem direita e esquerda pela inline*/
-  margin-inline: auto;
-  background-color: var(--brand-beige);
-  border: 1px solid var(--brand-light);
-  border-radius: 0.6rem;
-  display: flex;
-  /* parecido com o (display:flex) mas ele trabalhando com alinhamentos em colunas*/
-  flex-direction: column;
-  justify-content: center;
-  gap: 6rem;
-}
-
-.stat h3 {
-
-  font-size: 4.8rem;
-  color: var(--black-headline);
-  line-height: 130%;
-  margin-bottom: 0.4em;
-}
-
-.stat p {
-  /* aplicamos esta margem 0 pq mais acima no (p) nos fixamos uma distancoa q não é mais necessario */
-  margin: 0;
-  color: var(--primary-color);
-  font-size: 1.6rem;
-  line-height: 150%;
-}
 /* ==================  NAVIGATE ==================================== */
 nav {
   display: flex;
@@ -162,8 +95,8 @@ nav {
 
   position: fixed;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  width: 100vw;
+  z-index: 2;
    
 }
 
@@ -175,12 +108,10 @@ nav .wrapper {
 
 nav.scroll {
   background-color: var(--primary-color);
-  width: 100vw;
-  position: fixed;
-  top: 0;
+
 }
-/* o (nth-child(1)) significa que ele vai escolher o primeiro filho do (SVG)*/
-nav.scroll svg:nth-child(1) path {
+
+nav.scroll .logo path {
   fill: white;
 }
 
@@ -193,14 +124,13 @@ nav button {
   border: none;
   cursor: pointer;
 }
-
 /*=== MENU-EXPANDED =================================*/
 body.menu-expanded {
   overflow: hidden;
 }
 
 body.menu-expanded > :not(nav) {
-  display: none;
+  visibility: hidden;
 }
 
 .menu,
@@ -216,6 +146,10 @@ body.menu-expanded .close-menu {
   visibility: visible;
 }
 
+.menu {
+  transform: translateY(100%);
+}
+
 body.menu-expanded .menu {
   position: fixed;
   top: 0;
@@ -226,12 +160,13 @@ body.menu-expanded .menu {
   height: 100vh;
 
   padding-top: var(--nav-height);
+  /* mudança de pagina com opacidade */
+  transition: transform 1000ms;
+  transform: translateY(0);
+  
 }
 
-body.menu-expanded nav {
-  position: relative;
-}
-
+/* o (nth-child(1)) significa que ele vai escolher o primeiro filho do (SVG)*/
 .menu ul:nth-child(1) {
   display: flex;
   flex-direction: column;
@@ -286,4 +221,146 @@ body.menu-expanded .logo path {
 
 body.menu-expanded button path {
   stroke: white;
+}
+
+/*================== HOME ===========================================
+ uma opção para criar alguma coisa antes de algo no html pelo css */
+ 
+ #home {
+   padding-top: calc( 4.1rem + var(--nav-height));
+   /* padding-right: 2rem;
+   padding-left: 2rem; */
+  }
+
+#home::before {
+  content: '';
+  /* vw(largura da pagina inteira) preenche toda pagina independente que esta sendo visualizada */
+  width: 100%;
+  height: calc(108rem + var(--nav-height));
+  background-color: var(--brand-light);
+  display: block;
+  /* para sobrepor a figura e mudar a sua dimenção Z */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* dimenção Z para botara frente ou atrás */
+  z-index: -1;
+}
+
+#home p {
+  font-size: 1.8rem;
+  line-height: 150%;
+  font-weight: 400;
+  color: var(--paragraph);
+  margin-bottom: 3.2rem;
+}
+
+#home button {
+  background: var(--primary-color);
+  /* retirando a borda do botão */
+  border: none;
+  /* arredondando   */
+  border-radius: 4rem;
+  /* margem inferior */
+  margin-bottom: 6rem;
+  /* altura e largura */
+  height: 6.2rem;
+  width: 26.3rem;
+  /* cor da letra, tamanho, largura, caixa alta  */
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  /* para mecher com os filhos do button, trabalhando com alinhamentos em linhas*/
+  display: flex;
+  /* alinhar */
+  align-items: center;
+  /* justuficar */
+  justify-content: center;
+  /* espaço entre os elementos */
+  gap: 1.6rem;
+  /* precisa modificar altura e largura da margem por conta do display flex */
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#home img{
+  /* serve para a largura da imagem se ajustar de acordo com q almenta a fonte no navegador  */
+  width: 26.4rem;
+  display: block;
+  margin-inline: auto;
+  object-position: 0 2rem;
+}
+
+#home .stats {
+  width: 32.7rem;
+  padding-block: 4rem;
+  /* troca a margem direita e esquerda pela inline*/
+  margin-inline: auto;
+  background-color: var(--brand-beige);
+  border: 1px solid var(--brand-light);
+  border-radius: 0.6rem;
+  display: flex;
+  /* parecido com o (display:flex) mas ele trabalhando com alinhamentos em colunas*/
+  flex-direction: column;
+  justify-content: center;
+  gap: 6rem;
+}
+
+#home .stat h3 {
+
+  font-size: 4.8rem;
+  color: var(--black-headline);
+  line-height: 130%;
+  margin-bottom: 0.4em;
+}
+
+#home .stat p {
+  /* aplicamos esta margem 0 pq mais acima no (p) nos fixamos uma distancoa q não é mais necessario */
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.6rem;
+  line-height: 150%;
+}
+
+
+
+/* ============= SERVICES ==================== */
+#services h2 {
+  margin-bottom: 6rem;
+}
+
+#services .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 3.2rem;
+}
+
+#services .card {
+  padding: 2.4rem;
+  text-align: left;
+  background: white;
+  border: 1px solid var(--brand-light);
+  border-radius: 0.6rem;
+}
+
+#services .card h3{
+  margin-block: 1.6rem;
+}
+
+/* ============= ABOUT ==================== */
+#about{
+  text-align: left;
+  background-color: var(--brand-beige);
+
+
+}
+
+#about header h2 {
+  margin-bottom: 2.4rem;
+}
+
+#about .content p {
+  margin-top: 2.4rem;
+  margin-bottom: 6rem;
 }
